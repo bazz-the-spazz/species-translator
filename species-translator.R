@@ -39,14 +39,15 @@ species.translator <- function(latin, language="de", taxonomy=F ){
 	return(r)
 }
 
-species.translator(latin="Capsella bursa-pastoris")
-species.translator(latin="Capsella bursa-pastoris", language = "en")
+# # Examples
+# species.translator(latin="Capsella bursa-pastoris")
+# species.translator(latin="Capsella bursa-pastoris", language = "en")
 
-species.translator(latin="Capsella bursa-pastoris", taxonomy = T)
-species.translator(latin="Capsella bursa-pastoris", language = "en", taxonomy = T)
+# species.translator(latin="Capsella bursa-pastoris", taxonomy = T)
+# species.translator(latin="Capsella bursa-pastoris", language = "en", taxonomy = T)
 
-species.translator(latin="Abies alba", taxonomy = T)
-species.translator(latin="Abies alba", language = "en", taxonomy = T)
+# species.translator(latin="Abies alba", taxonomy = T)
+# species.translator(latin="Abies alba", language = "en", taxonomy = T)
 
-species.translator(latin="Leontodon autumnalis")
-species.translator(latin="Leontodon autumnalis", language = "en")
+# species.translator(latin="Leontodon autumnalis")
+# species.translator(latin="Leontodon autumnalis", language = "en")
