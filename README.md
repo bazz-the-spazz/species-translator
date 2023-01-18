@@ -1,5 +1,5 @@
 # species-translator
-Translate species names from Latin to German (maybe English) with the help of Wikipedia. Also get taxonomic information.
+Translate species names from Latin to German or English with the help of Wikipedia. Also get taxonomic information.
 
 Example: `species.translator(latin="Capsella bursa-pastoris", language = "en", taxonomy = T)`
 
