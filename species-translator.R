@@ -1,7 +1,7 @@
 # Query wikipedia
 
 
-species.translator <- function(latin, language=c("en","de"), taxonomy=F, tax.source="gbif" ){
+species.translator <- function(latin, language=c("en","de"), taxonomy=T, tax.source="gbif" ){
 	require(WikipediR)
 	if("de" %in% language){ # Translate to German with the German Wkipedia
 	  ac <-page_content(language = "de", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
