@@ -1,14 +1,14 @@
 # Query wikipedia
 
 
-species.translator <- function(latin, language="de", taxonomy=F, tax.source="gbif" ){
+species.translator <- function(latin, language=c("en","de"), taxonomy=F, tax.source="gbif" ){
 	require(WikipediR)
 	if("de" %in% language){ # Translate to German with the German Wkipedia
 	  ac <-page_content(language = "de", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
 	  text <- ac$parse$text
 	  sp<- strsplit(as.character(text), split='\\"')
 	  rd <- unlist(sp)[which(unlist(sp) == " title=")+1][1]
-	  if( grep("Begriffs", rd)>0) rd <- NA
+	  if( length(grep("Begriffs", rd))>0) rd <- NA
 	}
 	if("en" %in% language){ # Translate to English with the English Wikipedia
 		ac <-page_content(language = "en", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
