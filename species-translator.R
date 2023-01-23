@@ -16,14 +16,20 @@ species.translator <- function(latin, language="de", taxonomy=F ){
 		sp<- substr(sp, 4, unlist(gregexpr('<', sp))[1]-2)
 		re <- sp
 
-		if((re==""|is.na(re))){
+		if((re==""|is.na(re))){ # the it didn't work, try this approach:
 			ac <-page_content(language = "en", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
 			text <- as.character(ac$parse$text)
-			sp <- unlist(strsplit(text, split='</tbody></table>'))[2]
+			sp <- unlist(strsplit(text, split='\\n</tbody></table>'))[2]
 			sp <- unlist(strsplit(sp, split='<b>'))[3]
 			sp <- unlist(strsplit(sp, split='</b>'))[1]
 			sp<- paste(toupper(substr(sp,1,1)),substr(sp,2,nchar(sp)), sep="")
 			re <- sp
+
+			if((re=="NANA")){ # sometimes the article uses the english title: then try the german approach:
+				text <- ac$parse$text
+				sp<- strsplit(as.character(text), split='\\"')
+				re <- unlist(sp)[which(unlist(sp) == " title=")+1][1]
+			}
 		}
 	}
 
