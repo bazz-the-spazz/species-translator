@@ -1,4 +1,4 @@
-# Query wikipedia
+# Query wikipedia & GBIF
 
 
 species.translator <- function(latin, language=c("en","de"), taxonomy=T, tax.source="gbif" ){
