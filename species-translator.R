@@ -3,19 +3,40 @@
 
 species.translator <- function(latin, language="de", taxonomy=F ){
 	require(WikipediR)
-	if(language=="de"){
+	if("de" %in% language){
 	  ac <-page_content(language = "de", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
 	  text <- ac$parse$text
 	  sp<- strsplit(as.character(text), split='\\"')
-	  r <- unlist(sp)[which(unlist(sp) == " title=")+1]
+	  rd <- unlist(sp)[which(unlist(sp) == " title=")+1]
 	}
-	if(language=="en"){
+	if("en" %in% language){
 		ac <-page_content(language = "en", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
 		text <- as.character(ac$parse$text)
     sp <- unlist(strsplit(text, split='(180,250,180)'))[2]
 		sp<- substr(sp, 4, unlist(gregexpr('<', sp))[1]-2)
-		r <- sp
+		re <- sp
+
+		if((re==""|is.na(re))){
+			ac <-page_content(language = "en", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
+			text <- as.character(ac$parse$text)
+			sp <- unlist(strsplit(text, split='</tbody></table>'))[2]
+			sp <- unlist(strsplit(sp, split='<b>'))[3]
+			sp <- unlist(strsplit(sp, split='</b>'))[1]
+			sp<- paste(toupper(substr(sp,1,1)),substr(sp,2,nchar(sp)), sep="")
+			re <- sp
+		}
 	}
+
+
+	if(length(language)==2) {
+		r <- list(rd,re)
+		names(r) <- c("de", "en")
+		}
+	else{
+		if(language=="de") r <- rd
+		if(language=="en") r <- re
+	}
+
 
 	if(taxonomy){
 		ac <-page_content(language = "en", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
@@ -41,13 +62,10 @@ species.translator <- function(latin, language="de", taxonomy=F ){
 
 # # Examples
 # species.translator(latin="Capsella bursa-pastoris")
-# species.translator(latin="Capsella bursa-pastoris", language = "en")
-
-# species.translator(latin="Capsella bursa-pastoris", taxonomy = T)
-# species.translator(latin="Capsella bursa-pastoris", language = "en", taxonomy = T)
-
-# species.translator(latin="Abies alba", taxonomy = T)
-# species.translator(latin="Abies alba", language = "en", taxonomy = T)
-
-# species.translator(latin="Leontodon autumnalis")
-# species.translator(latin="Leontodon autumnalis", language = "en")
+# species.translator(latin="Capsella bursa-pastoris", language = c("en","de"), taxonomy = T)
+#
+# species.translator(latin="Capsella bursa-pastoris",  language = c("en","de"), taxonomy = T)
+#
+# species.translator(latin="Abies alba", language = c("en","de"), taxonomy = T)
+#
+# species.translator(latin="Leontodon autumnalis", language = c("en","de"), taxonomy = T)
