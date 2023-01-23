@@ -7,5 +7,5 @@ Example: `species.translator(latin="Capsella bursa-pastoris", language = "en", t
 
 - If the species is not on Wikipedia, there will be no translation.
 - If the species is not on the English Wikipedia there will be no taxonomic information.
-- Sometimes (often), the english name is not correctly extracted ;-(
+- Sometimes, the english name is not correctly translated (examples: "Silene latifolia", "Briza media") ;-(
 
