@@ -7,25 +7,25 @@ species.translator <- function(latin, language="de", taxonomy=F ){
 	  ac <-page_content(language = "de", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
 	  text <- ac$parse$text
 	  sp<- strsplit(as.character(text), split='\\"')
-	  rd <- unlist(sp)[which(unlist(sp) == " title=")+1]
+	  rd <- unlist(sp)[which(unlist(sp) == " title=")+1][1]
 	}
 	if("en" %in% language){
 		ac <-page_content(language = "en", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
 		text <- as.character(ac$parse$text)
     sp <- unlist(strsplit(text, split='(180,250,180)'))[2]
 		sp<- substr(sp, 4, unlist(gregexpr('<', sp))[1]-2)
-		re <- sp
+		re <- sp[1]
 
-		if((re==""|is.na(re))){ # the it didn't work, try this approach:
+		if((re==""|is.na(re))){
 			ac <-page_content(language = "en", project = "wikipedia", page_name = latin, as_wikitext = F, clean_response = F)
 			text <- as.character(ac$parse$text)
 			sp <- unlist(strsplit(text, split='\\n</tbody></table>'))[2]
 			sp <- unlist(strsplit(sp, split='<b>'))[3]
 			sp <- unlist(strsplit(sp, split='</b>'))[1]
 			sp<- paste(toupper(substr(sp,1,1)),substr(sp,2,nchar(sp)), sep="")
-			re <- sp
+			re <- sp[1]
 
-			if((re=="NANA")){ # sometimes the article uses the english title: then try the german approach:
+			if((re=="NANA")){
 				text <- ac$parse$text
 				sp<- strsplit(as.character(text), split='\\"')
 				re <- unlist(sp)[which(unlist(sp) == " title=")+1][1]
